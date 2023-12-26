@@ -2,7 +2,7 @@
   
 # primkit - Primer Toolkit
 
-![DigitalChristmasTreeFarm Cover](./img/primkit,jpg)
+![Primer Toolkit Cover](./img/primkit.jpg)
 
 </div>
 

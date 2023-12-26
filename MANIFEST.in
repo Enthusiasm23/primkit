@@ -1,2 +1,69 @@
-include README.md
+# Include all files from the designer, tests, and utils submodules
+recursive-include designer *
+recursive-include tests *
+recursive-include utils *
+
+# Include the LICENSE and README.md files, and the requirements.txt from the project root
 include LICENSE
+include README.md
+include requirements.txt
+
+# If you have documentation and images that should be included, add them as well
+recursive-include docs *
+recursive-include img *
+
+# Exclude compiled bytecode and other cache files that shouldn't be in the package
+global-exclude __pycache__
+global-exclude *.py[cod]
+global-exclude *.so
+global-exclude .DS_Store
+
+# Exclude specific file formats that are not needed in the package
+global-exclude *.bz2
+global-exclude *.csv
+global-exclude *.data
+global-exclude *.dta
+global-exclude *.feather
+global-exclude *.gz
+global-exclude *.h5
+global-exclude *.html
+global-exclude *.json
+global-exclude *.jsonl
+global-exclude *.kml
+global-exclude *.msgpack
+global-exclude *.pdf
+global-exclude *.parquet
+global-exclude *.pickle
+global-exclude *.pkl
+global-exclude *.png
+global-exclude *.pptx
+global-exclude *.ods
+global-exclude *.odt
+global-exclude *.orc
+global-exclude *.sas7bdat
+global-exclude *.sav
+global-exclude *.xls
+global-exclude *.xlsb
+global-exclude *.xlsm
+global-exclude *.xlsx
+global-exclude *.xpt
+global-exclude *.cpt
+global-exclude *.xml
+global-exclude *.xsl
+global-exclude *.xz
+global-exclude *.zip
+global-exclude *.zst
+global-exclude *~
+global-exclude .git*
+global-exclude \#*
+global-exclude *.c
+global-exclude *.cpp
+global-exclude *.h
+
+# Exclude the build directories
+prune build
+prune dist
+prune *egg-info
+
+# Exclude the tests data directory if not needed
+# prune primkit/tests/data

@@ -5,7 +5,7 @@ with open('requirements.txt') as f:
 
 setup(
     name='primkit',
-    version='0.1.0',
+    version='0.1.1',
     author='LiBao Feng',
     author_email='lbfeng23@gmail.com',
     description='A primer design assistant tool for convenient and efficient primer design and result preprocessing.',

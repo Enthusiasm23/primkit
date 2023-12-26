@@ -1,13 +1,13 @@
-from sqlalchemy import create_engine, exc, MetaData, Table, Column, Integer, text, \
-    String, DateTime, func, inspect, Numeric, Float, Text, Boolean, Date, Time, \
-    LargeBinary, DDL, event
+import logging
+import pandas as pd
+import numpy as np
 from sqlalchemy_utils import database_exists, create_database
 from sqlalchemy.exc import SQLAlchemyError, NoSuchTableError
 from sqlalchemy.dialects.mysql import LONGTEXT, DOUBLE, VARCHAR
 from sqlalchemy.engine import reflection
-import logging
-import pandas as pd
-import numpy as np
+from sqlalchemy import create_engine, exc, MetaData, Table, Column, Integer, text, \
+    String, DateTime, func, inspect, Numeric, Float, Text, Boolean, Date, Time, \
+    LargeBinary, DDL, event
 
 logger = logging.getLogger(__name__)
 

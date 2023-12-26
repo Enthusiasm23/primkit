@@ -1,12 +1,11 @@
-from ..config import CONNECT_TIMEOUT, READ_TIMEOUT, CHUNK_SIZE
-from ..utils.SysProfiler import get_user_agent
-
 import os
 import time
 from tqdm import tqdm
 import logging
 import requests
 import urllib3
+from ..config import CONNECT_TIMEOUT, READ_TIMEOUT, CHUNK_SIZE
+from ..utils.SysProfiler import get_user_agent
 
 logger = logging.getLogger(__name__)
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)

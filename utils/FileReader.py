@@ -1,8 +1,7 @@
-from ..config import SEP, HEADER, DROP_END_ROWS
-
+import io
 import pandas as pd
 import logging
-import io
+from ..config import SEP, HEADER, DROP_END_ROWS
 
 logger = logging.getLogger(__name__)
 

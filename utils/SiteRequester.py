@@ -1,8 +1,7 @@
-from ..utils.SysProfiler import get_headers, is_url
-from ..config import XSRF_NAME
-
 import requests
 from bs4 import BeautifulSoup
+from ..utils.SysProfiler import get_headers, is_url
+from ..config import XSRF_NAME
 
 
 def get_site_data(url):

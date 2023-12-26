@@ -1,13 +1,12 @@
-from ..utils.WebdriverInitializer import get_chrome_driver
-from ..config import DEFAULT_TIMEOUT, CHROME_DRIVER_PATH, XSRF_NAME
-from ..utils.SysProfiler import get_headers as get_system_headers
-
 import time
+import logging
 from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import logging
+from ..utils.WebdriverInitializer import get_chrome_driver
+from ..config import DEFAULT_TIMEOUT, CHROME_DRIVER_PATH, XSRF_NAME
+from ..utils.SysProfiler import get_headers as get_system_headers
 
 logger = logging.getLogger(__name__)
 

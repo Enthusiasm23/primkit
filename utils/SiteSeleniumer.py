@@ -1,7 +1,4 @@
-from ..utils.WebdriverInitializer import get_chrome_driver
-from ..config import DEFAULT_TIMEOUT, CHROME_DRIVER_PATH, XSRF_NAME
-from ..utils.SysProfiler import get_headers as get_system_headers, is_url
-
+import logging
 from selenium.common import TimeoutException
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.ui import WebDriverWait
@@ -10,7 +7,9 @@ from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
-import logging
+from ..utils.WebdriverInitializer import get_chrome_driver
+from ..config import DEFAULT_TIMEOUT, CHROME_DRIVER_PATH, XSRF_NAME
+from ..utils.SysProfiler import get_headers as get_system_headers, is_url
 
 logger = logging.getLogger(__name__)
 

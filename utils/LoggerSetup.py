@@ -1,7 +1,7 @@
-from ..config import LOG_LEVEL, LOG_FILE, LOG_FORMAT, LOG_FILE_MODE, MAX_LOG_SIZE, BACKUP_COUNT, LOG_STREAM
-
 import logging
 import logging.handlers
+from ..config import LOG_LEVEL, LOG_FILE, LOG_FORMAT, \
+    LOG_FILE_MODE, MAX_LOG_SIZE, BACKUP_COUNT, LOG_STREAM
 
 
 def setup_logging(
@@ -14,18 +14,20 @@ def setup_logging(
     stream=None
 ):
     """
-        设置日志记录。
+    Configure logging for the application.
 
-        :param level: 日志级别，例如 'DEBUG', 'INFO', 'WARNING'。默认从 config.py 获取，可被用户输入覆盖。
-        :param log_file: 日志文件的路径。如果指定，日志将被写入文件。默认从 config.py 获取，可被用户输入覆盖。
-        :param format: 日志格式。默认从 config.py 获取，可被用户输入覆盖。
-        :param log_file_mode: 写入日志文件的模式，例如 'a' 为追加模式。默认从 config.py 获取，可被用户输入覆盖。
-        :param max_log_size: 日志文件的最大大小（以字节为单位）。超过此大小，日志将被轮换。默认从 config.py 获取，可被用户输入覆盖。
-        :param backup_count: 保留的日志文件个数。默认从 config.py 获取，可被用户输入覆盖。
-        :param stream: 是否在控制台输出日志。默认从 config.py 获取，可被用户输入覆盖。
+    :param level: The logging level, e.g., 'DEBUG', 'INFO', 'WARNING'. Defaults to value from config.py but can be overridden by user input.
+    :param log_file: Path to the log file. If specified, logs will be written to the file. Defaults to value from config.py but can be overridden by user input.
+    :param format: The format for the logging messages. Defaults to value from config.py but can be overridden by user input.
+    :param log_file_mode: The mode for writing to the log file, e.g., 'a' for append mode. Defaults to value from config.py but can be overridden by user input.
+    :param max_log_size: The maximum size of the log file in bytes. When exceeded, the log will rotate. Defaults to value from config.py but can be overridden by user input.
+    :param backup_count: The number of backup log files to keep. Defaults to value from config.py but can be overridden by user input.
+    :param stream: Whether to output logs to the console. Defaults to value from config.py but can be overridden by user input.
+
+    The function uses the default configuration or configuration provided by the user. Logging can be directed to a file, console, or both based on parameters.
     """
 
-    # 使用默认配置或用户提供的配置
+    # Use the default configuration or user-provided configuration
     if level is not None:
         if isinstance(level, int):
             log_level = level
@@ -43,15 +45,15 @@ def setup_logging(
     backup_count = backup_count if backup_count is not None else BACKUP_COUNT
     stream = stream if stream is not None else LOG_STREAM
 
-    # 配置日志格式
+    # Configure the log format
     log_formatter = logging.Formatter(format)
 
-    # 获取根日志记录器
+    # Get the root logger
     logger = logging.getLogger()
     logger.setLevel(log_level)
     logger.handlers = []  # 清除现有的处理程序
 
-    # 文件处理程序，使用RotatingFileHandler
+    # File handler, using the RotatingFileHandler
     if log_file:
         file_handler = logging.handlers.RotatingFileHandler(
             log_file, mode=log_file_mode, maxBytes=max_log_size, backupCount=backup_count
@@ -59,7 +61,7 @@ def setup_logging(
         file_handler.setFormatter(log_formatter)
         logger.addHandler(file_handler)
 
-    # 控制台（流）处理程序
+    # Console (stream) handler
     if stream or not log_file:
         stream_handler = logging.StreamHandler()
         stream_handler.setFormatter(log_formatter)

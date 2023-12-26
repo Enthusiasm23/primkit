@@ -1,8 +1,7 @@
-from ..config import BROWSER, MFE_PRIMER
-
 import platform
 from fake_useragent import UserAgent
 from urllib.parse import urlparse
+from ..config import BROWSER, MFE_PRIMER
 
 
 def get_system_type():

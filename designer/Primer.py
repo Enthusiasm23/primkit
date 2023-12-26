@@ -1,16 +1,15 @@
+import re
+import time
+import logging
+import requests
+from bs4 import BeautifulSoup
+from selenium.webdriver import Keys
+from selenium.webdriver.common.by import By
+from selenium.common import NoSuchElementException
 from ..config import MFE_PRIMER, PRIMER_URL, RETRY_INTERVAL, \
     MAX_RETRIES, CHECK_INTERVAL, PRIMER_PARAMS, PARAMS_CONSTRAINTS, \
     PRIMER_SET_COUNT, WAITING_TIMEOUT
 from ..utils.SiteSeleniumer import WebDriverUtility
-
-import re
-import time
-import requests
-from bs4 import BeautifulSoup
-import logging
-from selenium.common import NoSuchElementException
-from selenium.webdriver import Keys
-from selenium.webdriver.common.by import By
 
 logger = logging.getLogger(__name__)
 

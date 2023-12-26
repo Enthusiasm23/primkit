@@ -1,7 +1,7 @@
 import os
 import logging
 
-# 浏览器驱动配置
+# Browser driver configuration
 BROWSER = os.environ.get('CHROME_DRIVER_PATH', 'chrome').lower()
 DEFAULT_TIMEOUT = int(os.environ.get('DEFAULT_TIMEOUT', 30))
 CHROME_DRIVER_PATH = os.environ.get('CHROME_DRIVER_PATH', None)
@@ -10,13 +10,13 @@ DEFAULT_WINDOWS_USER_DATA_DIR = os.environ.get('DEFAULT_WINDOWS_USER_DATA_DIR', 
 DEFAULT_HEADLESS = os.environ.get('DEFAULT_HEADLESS', 'False').lower() in ('true', '1', 't')
 REMOTE_DEBUGGING_PORT = os.environ.get('REMOTE_DEBUGGING_PORT', None)
 
-# 测试相关配置
+# Test the relevant configurations
 TEST_URL = os.environ.get('TEST_URL', "https://example.com")
 
-# 安全和认证配置
+# Security and authentication configurations
 XSRF_NAME = os.environ.get('XSRF_NAME', "_xsrf")
 
-# 日志配置
+# Log configuration
 LOG_LEVEL = os.environ.get('LOG_LEVEL', 'INFO')  # 日志级别
 LOG_FILE = os.environ.get('LOG_FILE', None)  # 日志文件路径
 LOG_FORMAT = os.environ.get('LOG_FORMAT', '%(asctime)s - %(name)s - %(levelname)s - %(message)s')  # 日志格式
@@ -25,14 +25,14 @@ MAX_LOG_SIZE = int(os.environ.get('MAX_LOG_SIZE', 10485760))  # 最大日志文�
 BACKUP_COUNT = int(os.environ.get('BACKUP_COUNT', 3))  # 保留的日志文件数量
 LOG_STREAM = os.environ.get('LOG_STREAM', 'True').lower() in ('true', '1', 't')  # 是否输出日志到控制台
 
-# 确保日志级别有效
+# Make sure that the log level is valid
 if LOG_LEVEL.upper() not in ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL']:
     LOG_LEVEL = 'INFO'
 
-# 转换日志级别为 logging 模块中的对应值
+# The conversion log level is the corresponding value in the logging module
 LOG_LEVEL = getattr(logging, LOG_LEVEL.upper(), logging.INFO)
 
-# 引物设计配置
+# Primer design configuration
 MFE_PRIMER = os.environ.get('MFE_PRIMER', "https://mfeprimer3.igenetech.com")
 PRIMER_URL = os.environ.get('PRIMER_URL', f"{MFE_PRIMER}/muld")
 SPEC_URL = os.environ.get('SPEC_URL', f"{MFE_PRIMER}/spec")
@@ -43,7 +43,7 @@ RETRY_INTERVAL = 2
 CHECK_INTERVAL = 3
 WAITING_TIMEOUT = 300
 
-# 引物默认参数
+# Primer default parameters
 PRIMER_PARAMS = {
     'DB': 'hg19.fa',        # hg19.fa/mm10.fa
     'SnpFilter': 'yes',     # yes/no
@@ -62,7 +62,7 @@ PRIMER_PARAMS = {
     'SpecMaxSize': '500',   # 0-1000000
 }
 
-# 参数设置范围
+# Parameter setting range
 PARAMS_CONSTRAINTS = {
     'DB': ['hg19.fa', 'mm10.fa'],
     'SnpFilter': ['yes', 'no'],
@@ -81,17 +81,15 @@ PARAMS_CONSTRAINTS = {
     'SpecMaxSize': [0, 1000000],
 }
 
-# 引物数量配置
+# Primer number configuration
 PRIMER_SET_COUNT = 20
 
-# 下载模块配置
+# Download the module configuration
 CONNECT_TIMEOUT = 10
 READ_TIMEOUT = 30
 CHUNK_SIZE = 1024
 
-# 读取引物结果配置
+# Read the primer result configuration
 SEP = ','
 HEADER = 3
 DROP_END_ROWS = 1
-
-

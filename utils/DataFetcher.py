@@ -1,10 +1,9 @@
-from ..utils.SiteSeleniumer import WebDriverUtility
-from ..utils.SiteRequester import get_site_data
-from ..config import PRIMER_URL
-
 import logging
 import requests
 from selenium.common.exceptions import WebDriverException
+from ..utils.SiteSeleniumer import WebDriverUtility
+from ..utils.SiteRequester import get_site_data
+from ..config import PRIMER_URL
 
 logger = logging.getLogger(__name__)
 

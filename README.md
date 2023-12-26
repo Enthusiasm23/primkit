@@ -2,7 +2,7 @@
   
 # primkit - Primer Toolkit
 
-![Primer Toolkit Cover](./img/primkit.jpg)
+![Primer Toolkit Cover](https://github.com/Enthusiasm23/primkit/blob/master/img/primkit.jpg?raw=true)
 
 </div>
 

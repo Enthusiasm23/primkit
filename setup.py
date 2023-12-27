@@ -5,14 +5,15 @@ with open('requirements.txt') as f:
 
 setup(
     name='primkit',
-    version='0.1.1',
+    version='0.1.2',
     author='LiBao Feng',
     author_email='lbfeng23@gmail.com',
     description='A primer design assistant tool for convenient and efficient primer design and result preprocessing.',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     url='https://github.com/Enthusiasm23/primkit',
-    packages=find_packages(),
+    package_dir={'': 'src'},
+    packages=find_packages(where='src'),
     install_requires=required,
     classifiers=[
         'Development Status :: 4 - Beta',

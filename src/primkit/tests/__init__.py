@@ -8,3 +8,7 @@ It includes:
 
 These scripts are intended to be run as standalone testing procedures and are critical in ensuring the functionality and reliability of the web automation aspects of the project.
 """
+from .PytestTrigger import TestSeleniumEnvironment
+from .SeleniumTests import ExecuteTests
+
+__all__ = ['TestSeleniumEnvironment', 'ExecuteTests']

@@ -315,14 +315,24 @@ class DatabaseHandler:
         try:
             # Get column definitions from the database table
             inspector = inspect(self.engine)
-            columns = [col for col in inspector.get_columns(table_name)]
-            table = Table(table_name, self.metadata, *[Column(col['name'], col['type']) for col in columns], extend_existing=True)
+            columns_info = [col for col in inspector.get_columns(table_name)]
+            pk_constraint = inspector.get_pk_constraint(table_name)
+            primary_keys = set(pk_constraint['constrained_columns'])
+
+            # Dynamically create columns and set the primary_key parameter based on whether the primary key is the primary key
+            table_columns = [
+                Column(col['name'], col['type'], primary_key=(col['name'] in primary_keys))
+                for col in columns_info
+            ]
+
+            # Use extend_existing to fit into existing table definitions
+            table = Table(table_name, self.metadata, *table_columns, extend_existing=True)
 
             # Replace NaN values with None and prepare data for insertion
             if isinstance(data, pd.DataFrame):
                 data = data.replace({np.nan: None})
                 df_column_names = set(data.columns)
-                db_column_names = {col['name'] for col in columns}
+                db_column_names = {col['name'] for col in columns_info}
                 unmatched_columns = df_column_names - db_column_names
                 if unmatched_columns:
                     if ignore_unmatched:
@@ -338,8 +348,10 @@ class DatabaseHandler:
 
             # Insert data row by row
             with self.engine.connect() as conn:
+                transaction = conn.begin()  # Start a new transaction
                 for row in data_dicts:
                     conn.execute(table.insert().values(**row))
+                transaction.commit()  # Explicitly commit a transaction
             logger.info(f"Inserted {len(data_dicts)} records into table '{table_name}'.")
 
         except Exception as e:

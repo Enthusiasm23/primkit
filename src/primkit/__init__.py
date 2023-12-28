@@ -5,7 +5,7 @@ This package facilitates various tasks such as automated browser interactions wi
 
 Importing `primkit` will set up logging, execute tests, and provide access to a suite of tools for efficient molecular biology research.
 """
-__version__ = "0.1.2"
+__version__ = "0.1.3"
 __author__ = 'LiBao Feng',
 __email__ = 'lbfeng23@gmail.com',
 __license__ = 'MIT'

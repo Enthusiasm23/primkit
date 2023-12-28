@@ -9,7 +9,7 @@ version: 2
 build:
   os: ubuntu-22.04
   tools:
-    python: "3.6"  # Specify the minimum python version required
+    python: "3.10"  # Specify the minimum python version required
     # You can also specify other tool versions:
     # nodejs: "19"
     # rust: "1.64"

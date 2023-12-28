@@ -1,7 +1,25 @@
 from setuptools import setup, find_packages
 
+# Read dependencies in requirements.txt
 with open('requirements.txt') as f:
     required = f.read().splitlines()
+
+# Configure additional installation options
+extra_options = {
+    'zip_safe': False,
+    'include_package_data': True,
+    'python_requires': '>=3.6',
+    'project_urls': {
+        'Documentation': 'https://primkit.readthedocs.io/',
+        'Source': 'https://github.com/Enthusiasm23/primkit',
+        'Tracker': 'https://github.com/Enthusiasm23/primkit/issues',
+    },
+    'extras_require': {
+        'dev': ['check-manifest'],
+        'test': ['coverage'],
+    }
+}
+
 
 setup(
     name='primkit',
@@ -22,7 +40,5 @@ setup(
         'Programming Language :: Python :: 3',
         'Operating System :: OS Independent',
     ],
-    python_requires='>=3.6',
-    include_package_data=True,
-    zip_safe=False
+    **extra_options
 )

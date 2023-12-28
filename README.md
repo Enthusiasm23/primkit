@@ -84,7 +84,7 @@ primer_result = primkit.design_primers(primer_data)
 
 # The 'primer_result' variable will contain the results of the primer designt primkit
 ```
-For comprehensive guides and usage examples, check the [documentation](https://github.com/Enthusiasm23/primkit/blob/master/docs/README.md?raw=true).
+For comprehensive guides and usage examples, check the [documentation](https://primkit.readthedocs.io).
 
 ## Contributing
 Contributions to primkit are welcome! Feel free to submit pull requests or open issues to propose enhancements or add new features.

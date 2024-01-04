@@ -7,7 +7,7 @@ from sqlalchemy.dialects.mysql import LONGTEXT, DOUBLE, VARCHAR
 from sqlalchemy.engine import reflection
 from sqlalchemy import create_engine, exc, MetaData, Table, Column, Integer, text, \
     String, DateTime, func, inspect, Numeric, Float, Text, Boolean, Date, Time, \
-    LargeBinary, DDL, event
+    LargeBinary, DDL, event, MEDIUMTEXT, LongText
 
 logger = logging.getLogger(__name__)
 
@@ -186,7 +186,7 @@ class DatabaseHandler:
 
             for col_name in df.columns:
                 if col_name not in [autoinc_column_name]:
-                    col_type = self._map_dtype(df[col_name].dtype)
+                    col_type = self._map_dtype(df, col_name)
                     columns.append(Column(col_name, col_type))
 
             # 1. Using SQLAlchemy's func.now() for default and onupdate.
@@ -228,13 +228,16 @@ class DatabaseHandler:
             logger.info(f"Table '{table_name}' already exists.")
 
     @staticmethod
-    def _map_dtype(dtype):
+    def _map_dtype(df, col_name):
         """
         Maps a pandas dtype to a SQLAlchemy type.
 
         :param dtype: Pandas data type.
         :return: SQLAlchemy column type.
         """
+        dtype = df[col_name].dtype
+        max_length = df[col_name].apply(lambda x: len(str(x)) if x is not None else 0).max()
+
         if pd.api.types.is_integer_dtype(dtype):
             return Integer
         elif pd.api.types.is_float_dtype(dtype):
@@ -242,7 +245,15 @@ class DatabaseHandler:
         elif pd.api.types.is_object_dtype(dtype):
             # Object dtype usually means string, but could be anything.
             # May require manual inspection and adjustment.
-            return String(255)
+            # Dynamically sets the type of column based on the maximum length
+            if max_length <= 255:
+                return String(255)
+            elif max_length <= 65535:
+                return Text
+            elif max_length <= 16777215:
+                return MEDIUMTEXT
+            else:
+                return LongText
         elif pd.api.types.is_bool_dtype(dtype):
             return Boolean
         elif pd.api.types.is_datetime64_any_dtype(dtype):

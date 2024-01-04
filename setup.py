@@ -23,7 +23,7 @@ extra_options = {
 
 setup(
     name='primkit',
-    version='0.1.3',
+    version='0.1.4',
     author='LiBao Feng',
     author_email='lbfeng23@gmail.com',
     description='A primer design assistant tool for convenient and efficient primer design and result preprocessing.',

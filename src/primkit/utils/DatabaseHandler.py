@@ -7,7 +7,8 @@ from sqlalchemy.dialects.mysql import LONGTEXT, DOUBLE, VARCHAR
 from sqlalchemy.engine import reflection
 from sqlalchemy import create_engine, exc, MetaData, Table, Column, Integer, text, \
     String, DateTime, func, inspect, Numeric, Float, Text, Boolean, Date, Time, \
-    LargeBinary, DDL, event, MEDIUMTEXT, LongText
+    LargeBinary, DDL, event
+from sqlalchemy.dialects.mysql import MEDIUMTEXT, LONGTEXT
 
 logger = logging.getLogger(__name__)
 

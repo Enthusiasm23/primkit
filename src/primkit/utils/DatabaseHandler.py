@@ -10,6 +10,7 @@ from sqlalchemy import create_engine, exc, MetaData, Table, Column, Integer, tex
     LargeBinary, DDL, event
 from sqlalchemy.dialects.mysql import MEDIUMTEXT, LONGTEXT
 
+
 logger = logging.getLogger(__name__)
 
 
@@ -30,6 +31,7 @@ class DatabaseHandler:
         """
         self.engine = create_engine(db_string, echo=echo)
         self.metadata = MetaData()
+        self.inspector = inspect(self.engine)
         self.db_name = db_string.split('/')[-1]  # Extract the database name from the connection string
         self.setup_db()
 
@@ -38,6 +40,12 @@ class DatabaseHandler:
         Returns the SQLAlchemy engine instance.
         """
         return self.engine
+
+    def get_inspector(self):
+        """
+        Returns the SQLAlchemy inspect instance.
+        """
+        return self.inspector
 
     def connect_db(self):
         """
@@ -65,7 +73,7 @@ class DatabaseHandler:
         :param table_name: The name of the table to create or verify.
         :param columns_spec: Optional; A list of strings or a dictionary with column names and types.
         """
-        if not inspect(self.engine).has_table(table_name):
+        if not self.inspector.has_table(table_name):
             if columns_spec is None:
                 raise NoSuchTableError(f"Table '{table_name}' does not exist. Provide column specifications to create.")
             self._create_table(table_name, columns_spec)
@@ -79,7 +87,7 @@ class DatabaseHandler:
         :param table_name: The name of the table to create.
         :param columns_spec: A list of strings or a dictionary with column names and types.
         """
-        if not inspect(self.engine).has_table(table_name):
+        if not self.inspector.has_table(table_name):
             self._create_table(table_name, columns_spec)
         else:
             logger.warning(f"Table '{table_name}' already exists and will not be recreated.")
@@ -181,7 +189,7 @@ class DatabaseHandler:
         :param table_name: The name of the table to create.
         :param df: DataFrame with schema for table creation.
         """
-        if not inspect(self.engine).has_table(table_name):
+        if not self.inspector.has_table(table_name):
             autoinc_column_name = self._autoinc_col(df.columns.to_list())
             columns = [Column(autoinc_column_name, Integer, primary_key=True, autoincrement=True)]
 
@@ -326,9 +334,8 @@ class DatabaseHandler:
         """
         try:
             # Get column definitions from the database table
-            inspector = inspect(self.engine)
-            columns_info = [col for col in inspector.get_columns(table_name)]
-            pk_constraint = inspector.get_pk_constraint(table_name)
+            columns_info = [col for col in self.inspector.get_columns(table_name)]
+            pk_constraint = self.inspector.get_pk_constraint(table_name)
             primary_keys = set(pk_constraint['constrained_columns'])
 
             # Dynamically create columns and set the primary_key parameter based on whether the primary key is the primary key

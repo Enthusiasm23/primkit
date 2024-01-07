@@ -147,7 +147,7 @@ class DatabaseHandler:
         created_at = Column('CreatedAt', DateTime, server_default=text('CURRENT_TIMESTAMP'))
         updated_at = Column('UpdatedAt', DateTime, server_default=text('CURRENT_TIMESTAMP'))
 
-        table = Table(table_name, self.metadata, *columns, created_at, updated_at)
+        table = Table(table_name, self.metadata, *columns, created_at, updated_at, extend_existing=True)
 
         # Add DDL listening events to set ON UPDATE constraints
         on_update_ddl = DDL(
@@ -222,7 +222,7 @@ class DatabaseHandler:
             created_at = Column('CreatedAt', DateTime, server_default=text('CURRENT_TIMESTAMP'))
             updated_at = Column('UpdatedAt', DateTime, server_default=text('CURRENT_TIMESTAMP'))
 
-            table = Table(table_name, self.metadata, *columns, created_at, updated_at)
+            table = Table(table_name, self.metadata, *columns, created_at, updated_at, extend_existing=True)
 
             # Add DDL listening events to set ON UPDATE constraints
             on_update_ddl = DDL(

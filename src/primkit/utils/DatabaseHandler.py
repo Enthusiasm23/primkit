@@ -3,9 +3,7 @@ import pandas as pd
 import numpy as np
 from sqlalchemy_utils import database_exists, create_database
 from sqlalchemy.exc import SQLAlchemyError, NoSuchTableError
-from sqlalchemy.dialects.mysql import LONGTEXT, DOUBLE, VARCHAR
-from sqlalchemy.engine import reflection
-from sqlalchemy import create_engine, exc, MetaData, Table, Column, Integer, text, \
+from sqlalchemy import create_engine, MetaData, Table, Column, Integer, text, \
     String, DateTime, func, inspect, Numeric, Float, Text, Boolean, Date, Time, \
     LargeBinary, DDL, event
 from sqlalchemy.dialects.mysql import MEDIUMTEXT, LONGTEXT
@@ -63,7 +61,7 @@ class DatabaseHandler:
                 logger.info(f"Database '{self.db_name}' created.")
             else:
                 logger.info(f"Database '{self.db_name}' already exists.")
-        except exc.SQLAlchemyError as e:
+        except SQLAlchemyError as e:
             logger.error(f"Error setting up database: {e}")
 
     def setup_table(self, table_name, columns_spec=None):
@@ -262,7 +260,7 @@ class DatabaseHandler:
             elif max_length <= 16777215:
                 return MEDIUMTEXT
             else:
-                return LongText
+                return LONGTEXT
         elif pd.api.types.is_bool_dtype(dtype):
             return Boolean
         elif pd.api.types.is_datetime64_any_dtype(dtype):

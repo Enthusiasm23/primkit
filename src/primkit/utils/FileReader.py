@@ -1,5 +1,6 @@
 import io
 import pandas as pd
+from pandas.errors import ParserError
 import logging
 from ..config import SEP, HEADER, DROP_END_ROWS
 
@@ -27,21 +28,27 @@ class FileReader:
         :return: DataFrame if successful, raises an error otherwise.
         """
         try:
-            df = self._try_read_csv(file_path, self.sep, self.header)
-            if self._check_header(df):
-                df = self._process_dataframe(df)
-                logger.info(f'Successfully read and processed file with header at row {self.header}: {file_path}')
-                return df
+            try:
+                df = self._try_read_csv(file_path, self.sep, self.header)
+                if self._check_header(df):
+                    df = self._process_dataframe(df)
+                    logger.info(f'Successfully read and processed file with header at row {self.header}: {file_path}')
+                    return df
+            except ParserError:
+                pass  # Ignore ParserError and proceed to custom logic
 
-            # Try using the next line as the header
-            df = self._try_read_csv(file_path, self.sep, self.header + 1)
-            if self._check_header(df):
-                df = self._process_dataframe(df)
-                logger.info(f'Successfully read and processed file with header at row {self.header + 1}: {file_path}')
-                return df
+            try:
+                df = self._try_read_csv(file_path, self.sep, self.header + 1)
+                if self._check_header(df):
+                    df = self._process_dataframe(df)
+                    logger.info(
+                        f'Successfully read and processed file with header at row {self.header + 1}: {file_path}')
+                    return df
+            except ParserError:
+                pass  # Ignore ParserError and proceed to custom logic
 
             # Use custom logic to try to read
-            df = self._read_csv_custom_logic(file_path, self.sep, self.header + 1)
+            df = self._read_csv_custom_logic(file_path, self.sep, self.header)
             return self._process_dataframe(df)
 
         except Exception as e:

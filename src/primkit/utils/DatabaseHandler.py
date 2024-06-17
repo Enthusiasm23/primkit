@@ -60,7 +60,7 @@ class DatabaseHandler:
                 create_database(self.engine.url)
                 logger.info(f"Database '{self.db_name}' created.")
             else:
-                logger.info(f"Database '{self.db_name}' already exists.")
+                logger.debug(f"Database '{self.db_name}' already exists.")
         except SQLAlchemyError as e:
             logger.error(f"Error setting up database: {e}")
 
@@ -76,7 +76,7 @@ class DatabaseHandler:
                 raise NoSuchTableError(f"Table '{table_name}' does not exist. Provide column specifications to create.")
             self._create_table(table_name, columns_spec)
         else:
-            logger.info(f"Table '{table_name}' already exists.")
+            logger.debug(f"Table '{table_name}' already exists.")
 
     def create_table(self, table_name, columns_spec):
         """
@@ -232,7 +232,7 @@ class DatabaseHandler:
             self.metadata.create_all(bind=self.engine)
             logger.info(f"Created table '{table_name}' from DataFrame schema.")
         else:
-            logger.info(f"Table '{table_name}' already exists.")
+            logger.debug(f"Table '{table_name}' already exists.")
 
     @staticmethod
     def _map_dtype(df, col_name):

@@ -9,6 +9,7 @@ from email.mime.base import MIMEBase
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.utils import formataddr
+from email.header import Header
 from email.header import decode_header
 from imapclient import IMAPClient
 
@@ -147,10 +148,15 @@ class EmailManager:
                             part = MIMEBase('application', 'octet-stream')
                             part.set_payload(annex.read())
                         encoders.encode_base64(part)
-                        part.add_header('Content-Disposition', f'attachment; filename={os.path.basename(attachment)}')
+                        # 使用 Header 对象来创建一个适当的 Content-Disposition 头
+                        filename_header = Header(os.path.basename(attachment), 'utf-8')
+                        part.add_header('Content-Disposition', 'attachment', filename=str(filename_header))
                         msg.attach(part)
 
-                self.smtp.send_message(msg)
+                # 使用 sendmail 而不是 send_message
+                self.smtp.sendmail(self.from_addr,
+                                   to_addrs + (cc_addrs if cc_addrs else []) + (bcc_addrs if bcc_addrs else []),
+                                   msg.as_string())
                 self.smtp.quit()
 
             logger.info('Email sent.')
